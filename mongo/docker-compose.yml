@@ -1,0 +1,35 @@
+version: "3.8"
+services:
+  mongodb:
+    image : mongo
+    container_name: mongodb
+    restart: always
+    environment:
+    - PUID=1000
+    - PGID=1000
+    volumes:
+    - /home/jk/projects/planlist/mongo/db:/data/db
+    restart: unless-stopped
+    networks:
+      mongo_net200:
+        ipv4_address: 172.200.0.2
+    command: mongod --bind_ip 127.0.0.1,172.200.0.2
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    networks:
+      mongo_net200:
+        ipv4_address: 172.200.0.3
+    environment:
+      ME_CONFIG_MONGODB_URL: mongodb://172.200.0.2/
+
+networks:
+  mongo_net200:
+    driver: bridge
+    ipam:
+      config:
+      - subnet: 172.200.0.0/16
+        gateway: 172.200.0.1

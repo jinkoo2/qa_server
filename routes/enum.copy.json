@@ -1,0 +1,65 @@
+{
+    "planner_list":[
+        "Siming.Lu|siming.lu@stonybrookmedicine.edu",
+        "Xin.Qian|xin.qian@stonybrookmedicine.edu",
+        "Jinkoo.Kim|jinkoo.kim@stonybrookmedicine.edu",
+        "Ting.Hsia|an.hsia@stonybrookmedicine.edu",
+        "Josh.Xu|zhigang.xu@stonybrookmedicine.edu",
+        "David.Kahn|david.kahn@stonybrookmedicine.edu",
+        "Sunny.Ailawadi|sandeep.ailawadi@stonybrookmedicine.edu",
+        "Maria.Kartsonis|maria.kartsonis@stonybrookmedicine.edu",
+        "Todd.Yoder|todd.yoder@stonybrookmedicine.edu"
+    ],
+    "doctor_list":[
+        "Kartik.Mani|kartik.mani@stonybrookmedicine.edu", 
+        "Samuel.Ryu|samuel.ryu@stonybrookmedicine.edu", 
+        "Alexander.Stessin|alexander.stessin@stonybrookmedicine.edu", 
+        "Edward.Valentine|edward.valentine@stonybrookmedicine.edu", 
+        "Bernard.Newman|bernard.newman@stonybrookmedicine.edu", 
+        "John.Roberson|john.roberson@stonybrookmedicine.edu", 
+        "Ewa.Zabrocka|ewa.zabrocka@stonybrookmedicine.edu"
+    ],
+    "plan_status_list": [
+        "Sim Completed",
+        "Waiting for MRI",
+        "Waiting for PET",
+        "Waiting for Patient CD",
+        "Need MD Contours",
+        "Need MD Ports",
+        "Ready to Plan",
+        "Planning",
+        "Need MD Approval",
+        "Need Physics ICC",
+        "Tx Approved",
+        "Replan Requested",
+        "Cancelled"
+    ],
+    "tx_modality_list": [
+        "2D/3D",
+        "IMRT",
+        "ELECTRON",
+        "SRT",
+        "SRS",
+        "SBRT_LUNG",
+        "SBRT_SPINE",
+        "SBRT_LIVER",
+        "SBRT_PROST",
+        "SBRT_OTHER",
+        "TBI",
+        "HDR_VC",
+        "HDR_T&O",
+        "HDR_SKIN",
+        "HDR_PROST",
+        "HDR_OTHER",
+        "LDR_I131",
+        "LDR_XOFIGO",
+        "LDR_OTHER"
+    ],
+    "machine_list": [
+         "SIL 21IX",
+         "Edge",
+         "TrueBeam",
+        "TrueBeamSH"
+    ]
+
+}

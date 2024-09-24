@@ -1,0 +1,21 @@
+<div class="text-center h3">{{title}} [N={{planlist.length}}] </div>
+<table class="table table-hover text-center">
+  <thead>
+    <tr>
+      <th scope="col">New Start</th>
+      <th scope="col">Case/Site</th>
+      <th scope="col">Status</th>
+      <th scope="col">People</th>
+    </tr>
+  </thead>
+  <tbody>
+      {{#planlist}}
+    <tr>
+      <th scope="row">{{newstart_str}}</th>
+      <td>{{plan.case_name}} [{{plan.tx_site}}]</td>
+      <td class="text-danger font-weight-bold">{{plan.status}}</td>
+      <td>{{plan.planners}}/{{plan.doctors}}</td>
+    </tr>
+    {{/planlist}}
+  </tbody>
+</table>
