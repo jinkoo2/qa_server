@@ -28,7 +28,7 @@ var fs = require('fs');
  */
 
 
-var port = normalizePort(process.env.PORT || arg_port || 3000);
+var port = normalizePort(process.env.PORT || arg_port || 4000);
 console.log('listing port=', port);
 
 app.set('port', port);
