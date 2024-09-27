@@ -23,3 +23,5 @@ journal
 diagnostic.data
 *.bson
 mongo/db
+
+uploads/
