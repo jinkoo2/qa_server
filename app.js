@@ -9,6 +9,8 @@ require('dotenv').config(); // Load environment variables
 
 var indexRouter = require('./routes/index');
 var catphanResultRouter = require('./routes/catphanresult');
+var measurement1DRouter = require('./routes/measurement1d');
+var uploadRouter = require('./routes/upload');
 
 // Initialize express app
 var app = express();
@@ -17,10 +19,13 @@ var app = express();
 app.use(cors());
 
 // Database connection setup
-const db_server = process.env.DB_SERVER || "mongodb://172.100.0.2";
+const db_server = process.env.DB_SERVER || "mongodb://172.100.0.2:27018";
 const db_name = process.env.DB_NAME || "qa_server";
 console.log('DB_SERVER===>', db_server);
 console.log('DB_NAME===>', db_name);
+
+
+
 
 mongoose.connect(`${db_server}/${db_name}`, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
@@ -37,9 +42,13 @@ app.set('view engine', 'hbs');
 
 // Middleware setup
 app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+
+// Increase the request body size limit to 1024mb
+app.use(express.json({ limit: '1024mb' }));  // For JSON requests
+app.use(express.urlencoded({ limit: '1024mb', extended: true }));  // For URL-encoded requests
+
 app.use(cookieParser());
+
 
 // Static file serving
 const public_dir = path.join(__dirname, 'public');
@@ -47,8 +56,10 @@ console.log('public_dir=', public_dir);
 app.use(express.static(public_dir));
 
 // Route setup
-app.use('/', indexRouter);  // Uncomment if indexRouter is required
+app.use('/', indexRouter);  
 app.use('/api/catphanresults', catphanResultRouter);
+app.use('/api/measurement1ds', measurement1DRouter);
+app.use('/api/upload', uploadRouter);
 
 // Catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -62,6 +73,12 @@ app.use(function (err, req, res, next) {
 
   res.status(err.status || 500);
   res.render('error');
+});
+
+// Optional: Increase the timeout for large file uploads
+app.use((req, res, next) => {
+  req.setTimeout(60 * 60 * 1000); // 1 hour
+  next();
 });
 
 // Websocket handler

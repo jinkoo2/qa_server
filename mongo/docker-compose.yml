@@ -13,7 +13,9 @@ services:
     networks:
       mongo_net100:
         ipv4_address: 172.100.0.2
-    command: mongod --bind_ip 127.0.0.1,172.100.0.2
+    command: mongod --bind_ip 127.0.0.1,172.100.0.2 --port 27018
+    ports:
+      - "27018:27018"  # Map the container's port to the host
 
   mongo-express:
     image: mongo-express
@@ -24,7 +26,7 @@ services:
       mongo_net100:
         ipv4_address: 172.100.0.3
     environment:
-      ME_CONFIG_MONGODB_URL: mongodb://172.100.0.2/
+      ME_CONFIG_MONGODB_URL: mongodb://172.100.0.2:27018/
 
 networks:
   mongo_net100:

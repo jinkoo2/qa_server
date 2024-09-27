@@ -251,6 +251,13 @@ const Ctp515Schema = new mongoose.Schema({
 });
 
 const CatPhanResultSchema = new mongoose.Schema({
+    // machine id, device id, etc
+    device_id: {
+        type: String,
+        required: true,
+        index: true  // Single field index on object_id
+    },
+
     performed_by: String,
     performed_on: String,
     notes: String,
@@ -264,7 +271,8 @@ const CatPhanResultSchema = new mongoose.Schema({
     ctp404: Ctp404Schema,
     ctp486: Ctp486Schema,
     ctp528: Ctp528Schema,
-    ctp515: Ctp515Schema
+    ctp515: Ctp515Schema,
+    file: String
 }, {
     timestamps: true
 });
