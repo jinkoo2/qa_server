@@ -12,6 +12,8 @@ var catphanResultRouter = require('./routes/catphanresult');
 var qc3ResultRouter = require('./routes/qc3result');
 var qckvResultRouter = require('./routes/qckvresult');
 var fc2ResultRouter = require('./routes/fc2result');
+var leedstorResultRouter = require('./routes/leedstorresult');
+var lasvegasResultRouter = require('./routes/lasvegasresult');
 var measurement1DRouter = require('./routes/measurement1d');
 var uploadRouter = require('./routes/upload');
 
@@ -52,7 +54,6 @@ app.use(express.urlencoded({ limit: '1024mb', extended: true }));  // For URL-en
 
 app.use(cookieParser());
 
-
 // Static file serving
 const public_dir = path.join(__dirname, 'public');
 console.log('public_dir=', public_dir);
@@ -64,6 +65,8 @@ app.use('/api/catphanresults', catphanResultRouter);
 app.use('/api/qc3results', qc3ResultRouter);
 app.use('/api/qckvresults', qckvResultRouter);
 app.use('/api/fc2results', fc2ResultRouter);
+app.use('/api/leedstorresults', leedstorResultRouter);
+app.use('/api/lasvegasresults', lasvegasResultRouter);
 app.use('/api/measurement1ds', measurement1DRouter);
 app.use('/api/upload', uploadRouter);
 
