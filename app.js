@@ -14,7 +14,8 @@ var qckvResultRouter = require('./routes/qckvresult');
 var fc2ResultRouter = require('./routes/fc2result');
 var leedstorResultRouter = require('./routes/leedstorresult');
 var lasvegasResultRouter = require('./routes/lasvegasresult');
-var measurement1DRouter = require('./routes/measurement1d');
+var number1DRouter = require('./routes/number1d');
+var string1DRouter = require('./routes/string1d');
 var uploadRouter = require('./routes/upload');
 
 // Initialize express app
@@ -67,7 +68,8 @@ app.use('/api/qckvresults', qckvResultRouter);
 app.use('/api/fc2results', fc2ResultRouter);
 app.use('/api/leedstorresults', leedstorResultRouter);
 app.use('/api/lasvegasresults', lasvegasResultRouter);
-app.use('/api/measurement1ds', measurement1DRouter);
+app.use('/api/number1ds', number1DRouter);
+app.use('/api/string1ds', string1DRouter);
 app.use('/api/upload', uploadRouter);
 
 // Catch 404 and forward to error handler

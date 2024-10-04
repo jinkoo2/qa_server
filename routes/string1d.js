@@ -1,6 +1,7 @@
+
 const express = require('express');
 const router = express.Router();
-const Measurement1D = require('../models/measurement1d');
+const String1D = require('../models/string1d');
 
 // CREATE: Add one or more measurements (POST /api/measurements)
 router.post('/', async (req, res) => {
@@ -10,11 +11,11 @@ router.post('/', async (req, res) => {
         // Check if the body is an array of objects
         if (Array.isArray(measurements)) {
             // If it's an array, use insertMany for bulk insert
-            const savedMeasurements = await Measurement1D.insertMany(measurements);
+            const savedMeasurements = await String1D.insertMany(measurements);
             res.status(201).json(savedMeasurements);
         } else {
             // If it's a single object, use save for a single document
-            const measurement = new Measurement1D(measurements);
+            const measurement = new String1D(measurements);
             const savedMeasurement = await measurement.save();
             res.status(201).json(savedMeasurement);
         }
@@ -26,7 +27,7 @@ router.post('/', async (req, res) => {
 // READ: Get all measurements (GET /api/measurements)
 router.get('/', async (req, res) => {
     try {
-        const measurements = await Measurement1D.find().sort({ createdAt: -1 });
+        const measurements = await String1D.find().sort({ createdAt: -1 });
         res.json(measurements);
     } catch (err) {
         res.status(500).json({ message: err.message });
@@ -36,7 +37,7 @@ router.get('/', async (req, res) => {
 // READ: Get a measurement by ID (GET /api/measurements/:id)
 router.get('/:id', async (req, res) => {
     try {
-        const measurement = await Measurement1D.findById(req.params.id);
+        const measurement = await String1D.findById(req.params.id);
         if (!measurement) return res.status(404).json({ message: 'Measurement not found' });
         res.json(measurement);
     } catch (err) {
@@ -47,7 +48,7 @@ router.get('/:id', async (req, res) => {
 // UPDATE: Update a measurement by ID (PUT /api/measurements/:id)
 router.put('/:id', async (req, res) => {
     try {
-        const updatedMeasurement = await Measurement1D.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        const updatedMeasurement = await String1D.findByIdAndUpdate(req.params.id, req.body, { new: true });
         if (!updatedMeasurement) return res.status(404).json({ message: 'Measurement not found' });
         res.json(updatedMeasurement);
     } catch (err) {
@@ -58,7 +59,7 @@ router.put('/:id', async (req, res) => {
 // DELETE: Delete a measurement by ID (DELETE /api/measurements/:id)
 router.delete('/:id', async (req, res) => {
     try {
-        const deletedMeasurement = await Measurement1D.findByIdAndRemove(req.params.id);
+        const deletedMeasurement = await String1D.findByIdAndRemove(req.params.id);
         if (!deletedMeasurement) return res.status(404).json({ message: 'Measurement not found' });
         res.json({ message: 'Measurement deleted' });
     } catch (err) {

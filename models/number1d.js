@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const Measurement1DSchema = new mongoose.Schema(
+const Number1DSchema = new mongoose.Schema(
     {
         // machine id, device id, etc
         device_id: {
@@ -36,6 +36,6 @@ const Measurement1DSchema = new mongoose.Schema(
 );
 
 // Define a compound index for object_id and measurement_id
-Measurement1DSchema.index({ object_id: 1, series_id: 1 });
+Number1DSchema.index({ object_id: 1, series_id: 1 });
 
-module.exports = mongoose.model('Measurement1D', Measurement1DSchema);
+module.exports = mongoose.model('Number1D', Number1DSchema);
