@@ -9,7 +9,7 @@ const Number1DSchema = new mongoose.Schema(
             index: true  // Single field index on object_id
         },
 
-        // room1_temperature, pressure etc
+        // room1_temperature, ressure etc
         series_id: {
             type: String,
             required: true,

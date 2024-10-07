@@ -33,6 +33,36 @@ router.get('/', async (req, res) => {
     }
 });
 
+// GET endpoint to fetch data based on query parameters
+router.get('/filtered', async (req, res) => {
+    const { device_id, series_id, start_date, end_date } = req.query;
+
+    try {
+        // Build query object
+        const query = {
+            device_id: device_id,
+            series_id: series_id
+        };
+
+        // Add date range filter to query if start_date and end_date are provided
+        if (start_date && end_date) {
+            query.time = {
+                $gte: new Date(start_date), // Start date
+                $lte: new Date(end_date) // End date
+            };
+        }
+
+        // Retrieve data from MongoDB
+        const results = await Number1D.find(query).sort({ time: 1 }); // Sort by time ascending
+
+        res.status(200).json(results);
+    } catch (err) {
+        console.error('Error fetching data:', err);
+        res.status(500).json({ error: 'An error occurred while fetching data' });
+    }
+});
+
+
 // READ: Get a measurement by ID (GET /api/measurements/:id)
 router.get('/:id', async (req, res) => {
     try {
@@ -63,6 +93,35 @@ router.delete('/:id', async (req, res) => {
         res.json({ message: 'Measurement deleted' });
     } catch (err) {
         res.status(500).json({ message: err.message });
+    }
+});
+
+
+// Add this route to your Express router
+router.get('/device/ids', async (req, res) => {
+    try {
+        // Retrieve all unique device_ids
+        const deviceIds = await Number1D.distinct('device_id');
+        res.json(deviceIds);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Add this route to your Express router to fetch series_ids based on device_id
+router.get('/series/ids', async (req, res) => {
+    const { device_id } = req.query;
+
+    if (!device_id) {
+        return res.status(400).json({ error: "device_id is required" });
+    }
+
+    try {
+        // Retrieve all unique series_ids for the provided device_id
+        const seriesIds = await Number1D.find({ device_id }).distinct('series_id');
+        res.json(seriesIds);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
     }
 });
 
