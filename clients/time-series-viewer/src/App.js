@@ -5,7 +5,7 @@ import TimeSeriesChart from './components/TimeSeriesChart';
 const App = () => {
     return (
         <div className="App">
-            <h1>Time Series Viewer</h1>
+            <h2>Time Series Viewer</h2>
             <TimeSeriesChart />
         </div>
     );

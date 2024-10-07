@@ -4,7 +4,30 @@ import axios from 'axios';
 
 const number1d_url = 'http://roweb3.uhmc.sbuh.stonybrook.edu:4000/api/number1ds';
 
+// Function to get the date in "YYYY-MM-DD" format
+const formatDate = (date) => {
+    return date.toISOString().split('T')[0];
+};
+
+// Get today at 11:59 PM
+const getEndOfToday = () => {
+    const today = new Date();
+    today.setHours(23, 59, 59, 999);
+    return formatDate(today);
+};
+
+// Get 7 days before today
+const getStartDate = () => {
+    const startDate = new Date();
+    startDate.setDate(startDate.getDate() - 7);
+    return formatDate(startDate);
+};
+
 const TimeSeriesChart = () => {
+    // Set default start and end dates
+    const [startDate, setStartDate] = useState(getStartDate);
+    const [endDate, setEndDate] = useState(getEndOfToday);
+
     const [data, setData] = useState([]);
     const [deviceId, setDeviceId] = useState('');
     const [suggestedDeviceIds, setSuggestedDeviceIds] = useState([]);
@@ -12,13 +35,11 @@ const TimeSeriesChart = () => {
     const [seriesId, setSeriesId] = useState('');
     const [suggestedSeriesIds, setSuggestedSeriesIds] = useState([]);
     const [filteredSeriesIds, setFilteredSeriesIds] = useState([]);
-    const [startDate, setStartDate] = useState('');
-    const [endDate, setEndDate] = useState('');
 
     // Function to fetch data from the server
     const fetchData = async () => {
         try {
-            const response = await axios.get(number1d_url+'/filtered', {
+            const response = await axios.get(number1d_url, {
                 params: {
                     device_id: deviceId,
                     series_id: seriesId,
@@ -204,9 +225,12 @@ const TimeSeriesChart = () => {
                 <ResponsiveContainer width="100%" height={400}>
                     <LineChart data={data}>
                         <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="time" />
+                        <XAxis 
+                            dataKey="time" 
+                            tickFormatter={(tickItem) => new Date(tickItem).toLocaleDateString()} // Format date on x-axis
+                        />
                         <YAxis />
-                        <Tooltip />
+                        <Tooltip/> 
                         <Line type="monotone" dataKey="value" stroke="#8884d8" />
                         {/* Brush for zooming */}
                         <Brush dataKey="time" height={30} stroke="#8884d8" />

@@ -23,6 +23,7 @@ router.post('/', async (req, res) => {
     }
 });
 
+/*
 // READ: Get all measurements (GET /api/measurements)
 router.get('/', async (req, res) => {
     try {
@@ -32,9 +33,9 @@ router.get('/', async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 });
-
+*/
 // GET endpoint to fetch data based on query parameters
-router.get('/filtered', async (req, res) => {
+router.get('/', async (req, res) => {
     const { device_id, series_id, start_date, end_date } = req.query;
 
     try {
