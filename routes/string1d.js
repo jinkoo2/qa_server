@@ -18,10 +18,6 @@ router.post('/', async (req, res) => {
             data.time = new Date(data.time);
         }
 
-        console.log('=======================');
-        console.log(data);
-        console.log('=======================');
-
         if (Array.isArray(data)) {
 
             // remove empty value string
