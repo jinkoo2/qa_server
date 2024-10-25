@@ -36,6 +36,6 @@ const Number1DSchema = new mongoose.Schema(
 );
 
 // Define a compound index for object_id and measurement_id
-Number1DSchema.index({ object_id: 1, series_id: 1 });
+Number1DSchema.index({ device_id: 1, series_id: 1 });
 
 module.exports = mongoose.model('Number1D', Number1DSchema);

@@ -23,7 +23,7 @@ const String1DSchema = new mongoose.Schema(
 
         value: {
             type: String,
-            required: true
+            required: false,
         },
 
         notes: String,
@@ -36,6 +36,6 @@ const String1DSchema = new mongoose.Schema(
 );
 
 // Define a compound index for object_id and measurement_id
-String1DSchema.index({ object_id: 1, series_id: 1 });
+String1DSchema.index({ device_id: 1, series_id: 1 });
 
 module.exports = mongoose.model('String1D', String1DSchema);

@@ -6,23 +6,42 @@ const String1D = require('../models/string1d');
 // CREATE: Add one or more measurements (POST /api/measurements)
 router.post('/', async (req, res) => {
     try {
-        const data = req.body; // Request body can be a single object or an array
+        let data = req.body;
 
-        // Check if the body is an array of objects
+        // Normalize time fields in the request body
         if (Array.isArray(data)) {
-            // If it's an array, use insertMany for bulk insert
-            const savedItems = await String1D.insertMany(data);
+            data = data.map(item => ({
+                ...item,
+                time: new Date(item.time)
+            }));
+        } else {
+            data.time = new Date(data.time);
+        }
+
+        console.log('=======================');
+        console.log(data);
+        console.log('=======================');
+
+        if (Array.isArray(data)) {
+
+            // remove empty value string
+            
+            const savedItems = await String1D.insertMany(data, { ordered: true });
             res.status(201).json(savedItems);
         } else {
-            // If it's a single object, use save for a single document
             const string1d = new String1D(data);
             const savedItem = await string1d.save();
             res.status(201).json(savedItem);
         }
     } catch (err) {
-        res.status(400).json({ message: err.message });
+        if (err.name === 'ValidationError') {
+            res.status(400).json({ message: 'Validation failed', errors: err.errors });
+        } else {
+            res.status(500).json({ message: 'Internal server error', error: err.message });
+        }
     }
 });
+
 
 // READ: Get all measurements (GET /api/measurements)
 router.get('/', async (req, res) => {
