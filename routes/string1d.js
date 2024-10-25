@@ -6,18 +6,18 @@ const String1D = require('../models/string1d');
 // CREATE: Add one or more measurements (POST /api/measurements)
 router.post('/', async (req, res) => {
     try {
-        const measurements = req.body; // Request body can be a single object or an array
+        const data = req.body; // Request body can be a single object or an array
 
         // Check if the body is an array of objects
-        if (Array.isArray(measurements)) {
+        if (Array.isArray(data)) {
             // If it's an array, use insertMany for bulk insert
-            const savedMeasurements = await String1D.insertMany(measurements);
-            res.status(201).json(savedMeasurements);
+            const savedItems = await String1D.insertMany(data);
+            res.status(201).json(savedItems);
         } else {
             // If it's a single object, use save for a single document
-            const measurement = new String1D(measurements);
-            const savedMeasurement = await measurement.save();
-            res.status(201).json(savedMeasurement);
+            const string1d = new String1D(data);
+            const savedItem = await string1d.save();
+            res.status(201).json(savedItem);
         }
     } catch (err) {
         res.status(400).json({ message: err.message });
