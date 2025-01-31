@@ -1,14 +1,14 @@
 version: "3.8"
 services:
-  mongodb:
+  mongodb_qa:
     image : mongo
-    container_name: mongodb
+    container_name: mongodb_qa
     environment:
     - PUID=1000
     - PGID=1000
     volumes:
     - /home/jk/projects/qa_server/mongo/db:/data/db
-    restart: unless-stopped
+    restart: always
     networks:
       mongo_net100:
         ipv4_address: 172.100.0.2
@@ -16,9 +16,10 @@ services:
     ports:
       - "27018:27018"  # Map the container's port to the host
 
-  mongo-express:
+  mongo_express_qa:
     image: mongo-express
-    restart: unless-stopped
+    container_name: mongo_express_qa
+    restart: always
     ports:
       - 8091:8081
     networks:
