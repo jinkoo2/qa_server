@@ -30,9 +30,6 @@ const db_name = process.env.DB_NAME || "qa_server";
 console.log('DB_SERVER===>', db_server);
 console.log('DB_NAME===>', db_name);
 
-
-
-
 mongoose.connect(`${db_server}/${db_name}`, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     console.log('db connection successful!.');
