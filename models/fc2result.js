@@ -38,6 +38,7 @@ const Fc2ResultSchema = new mongoose.Schema({
     performed_by: String,
     performed_on: Date,
     notes: String,
+    file: String,
     config: Object
 }, {
     timestamps: true

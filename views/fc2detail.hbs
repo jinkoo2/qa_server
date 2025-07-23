@@ -1,0 +1,41 @@
+<h1>FC2 QA Report Detail</h1>
+
+<ul>
+  <li><strong>Device:</strong> {{result.device_id}}</li>
+  <li><strong>Performed Time:</strong> {{localDate result.performed_on}}</li>
+  <li><strong>Performed By:</strong> {{result.performed_by}}</li>
+  <li><strong>Notes:</strong> {{result.notes}}</li>
+  <li><strong>Pylinac Version:</strong> {{result.pylinac_version}}</li>
+  <li><strong>Date of Analysis:</strong> {{localDate result.date_of_analysis}}</li>
+</ul>
+
+<h2>Field Results</h2>
+<ul>
+  <li>
+    Field Size X: {{result.test.field_size_x_mm}} mm
+    {{#if result.check.field_size_x_mm}}<strong style="color:red">✗ Fail</strong>{{else}}<span style="color:green">✓ Pass</span>{{/if}}
+  </li>
+  <li>
+    Field Size Y: {{result.test.field_size_y_mm}} mm
+    {{#if result.check.field_size_y_mm}}<strong style="color:red">✗ Fail</strong>{{else}}<span style="color:green">✓ Pass</span>{{/if}}
+  </li>
+  <li>
+    EPID Offset X: {{result.test.field_epid_offset_x_mm}} mm
+    {{#if result.check.field_epid_offset_x_mm}}<strong style="color:red">✗ Fail</strong>{{else}}<span style="color:green">✓ Pass</span>{{/if}}
+  </li>
+  <li>
+    EPID Offset Y: {{result.test.field_epid_offset_y_mm}} mm
+    {{#if result.check.field_epid_offset_y_mm}}<strong style="color:red">✗ Fail</strong>{{else}}<span style="color:green">✓ Pass</span>{{/if}}
+  </li>
+  <li>
+    BB Offset X: {{result.test.field_bb_offset_x_mm}} mm
+    {{#if result.check.field_bb_offset_x_mm}}<strong style="color:red">✗ Fail</strong>{{else}}<span style="color:green">✓ Pass</span>{{/if}}
+  </li>
+  <li>
+    BB Offset Y: {{result.test.field_bb_offset_y_mm}} mm
+    {{#if result.check.field_bb_offset_y_mm}}<strong style="color:red">✗ Fail</strong>{{else}}<span style="color:green">✓ Pass</span>{{/if}}
+  </li>
+</ul>
+
+
+<a href="/view/fc2/list">← Back to List</a>

@@ -1,0 +1,24 @@
+<h1>FC2 QA Results</h1>
+
+<table border="1" cellpadding="8" cellspacing="0">
+  <thead>
+    <tr>
+      <th>Device</th>
+      <th>Performed On</th>
+      <th>Performed By</th>
+      <th>Notes</th>
+      <th>View Report</th> 
+    </tr>
+  </thead>
+  <tbody>
+    {{#each results}}
+    <tr>
+      <td>{{device}}</td>
+      <td>{{performed_on}}</td>
+      <td>{{performed_by}}</td>
+      <td>{{notes}}</td>
+      <td><a href="/view/fc2/{{_id}}" target="_blank">View</a></td> <!-- New Link -->
+    </tr>
+    {{/each}}
+  </tbody>
+</table>

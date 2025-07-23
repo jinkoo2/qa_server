@@ -18,6 +18,9 @@ var number1DRouter = require('./routes/number1d');
 var string1DRouter = require('./routes/string1d');
 var uploadRouter = require('./routes/upload');
 
+const helloViewRouter = require('./views/routes/hello');
+const fc2ViewRouter = require('./views/routes/fc2');
+
 // Initialize express app
 var app = express();
 
@@ -47,10 +50,18 @@ app.set('view engine', 'hbs');
 app.use(logger('dev'));
 
 // Increase the request body size limit to 1024mb
-app.use(express.json({ limit: '1024mb' }));  // For JSON requests
-app.use(express.urlencoded({ limit: '1024mb', extended: true }));  // For URL-encoded requests
+const maxBodySize = process.env.MAX_BODY_SIZE || '1024mb';
+app.use(express.json({ limit: maxBodySize }));  // For JSON requests
+app.use(express.urlencoded({ limit: maxBodySize, extended: true }));  // For URL-encoded requests
 
 app.use(cookieParser());
+
+// Increase the timeout for large file uploads
+app.use((req, res, next) => {
+  req.setTimeout(60 * 60 * 1000); // 1 hour
+  next();
+});
+
 
 // Static file serving
 const public_dir = path.join(__dirname, 'public');
@@ -69,6 +80,10 @@ app.use('/api/number1ds', number1DRouter);
 app.use('/api/string1ds', string1DRouter);
 app.use('/api/upload', uploadRouter);
 
+// view Routes
+app.use('/view/hello', helloViewRouter);
+app.use('/view/fc2', fc2ViewRouter);
+
 // Catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
@@ -83,14 +98,26 @@ app.use(function (err, req, res, next) {
   res.render('error');
 });
 
-// Optional: Increase the timeout for large file uploads
-app.use((req, res, next) => {
-  req.setTimeout(60 * 60 * 1000); // 1 hour
-  next();
-});
 
 // Websocket handler
 var websocket_handler = require('./websocket_handler');
 app.websocket_handler = new websocket_handler();
+
+// handlebar helper
+const hbs = require('hbs');
+hbs.registerHelper('round1', function(value) {
+  return typeof value === 'number' ? value.toFixed(1) : value;
+});
+
+hbs.registerHelper('localDate', function (date) {
+  const d = new Date(date);
+  return d.toLocaleString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
+  });
+});
 
 module.exports = app;
